@@ -5,9 +5,9 @@ import random
 
 """Stream_out = open("aesebu_output.aes", "w")"""
 
-stream_out = []
+audio_r = []
 for i in range(0,4880):
-    stream_out.append(random.randint(0,1))
+    audio_r.append(random.randint(0,1))
 
 
 def parity (i):
@@ -16,9 +16,9 @@ def parity (i):
         if j == 1:
             len +=1
     if  len %2 == 0:
-        parity = 1
-    else:
         parity = 0
+    else:
+        parity = 1
 
     return int(parity)
 
@@ -67,13 +67,11 @@ for i in range(0,192):
     Frames.append(0)
 print(len(Frames))
 """ EN ESTE PUNTO DECIDIMOS CUAL SERÁ EL PREAMBULO"""
-trama = []
-for i in range(1,10):
-    stream_out.append(0)
+
 aes = []
-for Posision in range(0, len(Frames)-1):
+for Posision in range(0, len(Frames)):
     trama = []
-    print("posision:")
+    print("Número de trama :")
     print(Posision)
     if int(Posision) == 0:
         trama = PR_Z0
@@ -85,19 +83,20 @@ for Posision in range(0, len(Frames)-1):
 
 
     """ Ahora rellenamos con el wav """
-    trama = trama + stream_out[(Posision*20):(((Posision+1)*20))]
+    trama = trama + audio_r[(Posision*20):(((Posision+1)*20))]
     """Terminamos con la inclusión de la cola"""
     chanel = arrayChannel("48","20")
     cola  = [0,0] + [chanel[Posision]]
     trama = trama + cola
+    print("Trama sin paridad + tamaño")
     print(trama)
     print(len(trama))
-    # parity = parity(lol)
-    # print(parity)
     trama.append(parity(trama))
 
     aes.append(trama)
-    # print("TRAMAFINAL:")
-    # print(trama)
-    # print(len(trama))
+    print("TRAMAFINAL y tamaño de trama:")
+    print(trama)
+    print(len(trama))
+
+print("ARCHIVO AES:")    
 print(aes)
