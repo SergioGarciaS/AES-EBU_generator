@@ -15,5 +15,9 @@ def parity (i):
 
     return parity
 
-print(parity(a))
+
+
 print(parity(b))
+z = parity(b);
+b.append(z)
+print(b)
