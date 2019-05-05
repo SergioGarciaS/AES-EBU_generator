@@ -2,6 +2,15 @@ import wave
 import array
 import io
 import random
+import sys
+
+
+# AQUI SE INCLUYE EL APARTADO DE OPCIONES.
+
+if len(sys.argv) != 3:
+    sys.exit("Usage : $ python3 prueba.py Frequency bits")
+
+
 
 """Stream_out = open("aesebu_output.aes", "w")"""
 
@@ -23,6 +32,8 @@ def parity (i):
     return int(parity)
 
 def arrayChannel(wav, b_wav):
+    print("WAV ES: ", wav)
+    print("b_wav es: ",b_wav)
     chanel = [1,0,0,0,0,0]
     " Definimos por frecuencias del wav"
 
@@ -85,7 +96,7 @@ for Posision in range(0, len(Frames)):
     """ Ahora rellenamos con el wav """
     trama = trama + audio_r[(Posision*20):(((Posision+1)*20))]
     """Terminamos con la inclusión de la cola"""
-    chanel = arrayChannel("48","20")
+    chanel = arrayChannel(sys.argv[1],sys.argv[2])
     cola  = [0,0] + [chanel[Posision]]
     trama = trama + cola
     print("Trama sin paridad + tamaño")
@@ -98,5 +109,5 @@ for Posision in range(0, len(Frames)):
     print(trama)
     print(len(trama))
 
-print("ARCHIVO AES:")    
+print("ARCHIVO AES:")
 print(aes)
